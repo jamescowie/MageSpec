@@ -124,8 +124,7 @@ class Extension implements ExtensionInterface
         $container->addConfigurator(function ($c) {
             $suite = $c->getParam('mage_locator', array('main' => ''));
             MageLoader::register(
-                isset($suite['src_path']) ? rtrim($suite['src_path'], '/') . DIRECTORY_SEPARATOR : 'src',
-                isset($suite['code_pool']) ? $suite['code_pool'] : 'local'
+                isset($suite['src_path']) ? rtrim($suite['src_path'], '/') . DIRECTORY_SEPARATOR : 'src'
             );
         });
     }

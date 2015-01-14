@@ -106,26 +106,22 @@ class GeneratorAssembler implements Assembler
             if (isset($suite['src_path'])) {
                 $etcPath = rtrim($suite['src_path'], '/') . DIRECTORY_SEPARATOR . '..'
                     . DIRECTORY_SEPARATOR . 'etc' . DIRECTORY_SEPARATOR . 'modules' . DIRECTORY_SEPARATOR;
-            } else {
-                $etcPath = 'app/etc/';
             }
-            $codePool = isset($suite['code_pool']) ? $suite['code_pool'] : 'local';
+
             return new ModuleGenerator(
                 $etcPath,
-                $c->get('filesystem'),
-                $codePool
+                $c->get('filesystem')
             );
         });
 
         $container->setShared('xml_generator.generators.config', function($c) {
             $suite = $c->getParam('mage_locator', array('main' => ''));
             $srcPath = isset($suite['src_path']) ? rtrim($suite['src_path'], '/') . DIRECTORY_SEPARATOR : 'src';
-            $codePool = isset($suite['code_pool']) ? $suite['code_pool'] : 'local';
+
             $generator = new ConfigGenerator(
                 $srcPath,
                 $c->get('filesystem'),
-                $c->get('xml.formatter'),
-                $codePool
+                $c->get('xml.formatter')
             );
 
             array_map(

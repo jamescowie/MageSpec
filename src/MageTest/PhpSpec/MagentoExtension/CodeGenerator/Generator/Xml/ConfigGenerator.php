@@ -36,9 +36,9 @@ class ConfigGenerator
     /**
      * @param string $path
      */
-    public function __construct($path, Filesystem $filesystem, Formatter $formatter, $codePool = 'local')
+    public function __construct($path, Filesystem $filesystem, Formatter $formatter)
     {
-        $this->path = $path . $codePool . DIRECTORY_SEPARATOR;
+        $this->path = $path . DIRECTORY_SEPARATOR;
         $this->filesystem = $filesystem;
         $this->formatter = $formatter;
     }

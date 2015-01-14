@@ -40,21 +40,19 @@ class MageLoader
     protected $_collectPath         = null;
     protected $_arrLoadedClasses    = array();
     protected $_srcPath = '';
-    protected $_codePool = '';
 
     /**
      * Class constructor
      */
-    public function __construct($srcPath, $codePool = 'local')
+    public function __construct($srcPath)
     {
         $this->_srcPath = $srcPath;
-        $this->_codePool = $codePool;
         $this->_isIncludePathDefined = defined('COMPILER_INCLUDE_PATH');
         if (defined('COMPILER_COLLECT_PATH')) {
             $this->_collectClasses  = true;
             $this->_collectPath     = COMPILER_COLLECT_PATH;
         }
-        set_include_path(get_include_path() . PATH_SEPARATOR . $this->_srcPath . $this->_codePool);
+        set_include_path(get_include_path() . PATH_SEPARATOR . $this->_srcPath);
         self::registerScope(self::$_scope);
     }
 
@@ -63,10 +61,10 @@ class MageLoader
      *
      * @return MageLoader
      */
-    static public function instance($srcPath, $codePool)
+    static public function instance($srcPath)
     {
         if (!self::$_instance) {
-            self::$_instance = new MageLoader($srcPath, $codePool);
+            self::$_instance = new MageLoader($srcPath);
         }
         return self::$_instance;
     }
@@ -74,9 +72,9 @@ class MageLoader
     /**
      * Register SPL autoload function
      */
-    static public function register($srcPath, $codePool)
+    static public function register($srcPath)
     {
-        spl_autoload_register(array(self::instance($srcPath, $codePool), 'autoload'));
+        spl_autoload_register(array(self::instance($srcPath), 'autoload'));
     }
 
     /**
@@ -189,7 +187,7 @@ class MageLoader
      */
     private function includeController($class)
     {
-        $local = $this->_srcPath . DIRECTORY_SEPARATOR . $this->_codePool . DIRECTORY_SEPARATOR;
+        $local = $this->_srcPath . DIRECTORY_SEPARATOR;
         $controller = explode('_', $class);
         array_splice($controller, 2, 0 , 'controllers');
         $pathToController = implode(DIRECTORY_SEPARATOR, $controller);

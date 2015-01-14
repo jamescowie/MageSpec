@@ -17,18 +17,12 @@ class ModuleGenerator
     private $path;
 
     /**
-     * @var string
-     */
-    private $codePool;
-
-    /**
      * @param string $path
      */
-    public function __construct($path, Filesystem $fileSystem, $codePool = 'local')
+    public function __construct($path, Filesystem $fileSystem)
     {
         $this->fileSystem = $fileSystem;
         $this->path = $path;
-        $this->codePool = $codePool;
     }
 
     public function generate($moduleName)
@@ -38,8 +32,7 @@ class ModuleGenerator
         }
 
         $values = array(
-            '%module_name%' => $moduleName,
-            '%code_pool%' => $this->codePool,
+            '%module_name%' => $moduleName
         );
 
         if (!$this->fileSystem->pathExists($this->path)) {
