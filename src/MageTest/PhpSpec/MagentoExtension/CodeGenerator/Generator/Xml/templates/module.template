@@ -1,9 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<config>
-    <modules>
-        <%module_name%>
-            <active>true</active>
-            <codePool>%code_pool%</codePool>
-        </%module_name%>
-    </modules>
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../../../../lib/internal/Magento/Framework/Module/etc/module.xsd">
+    <module name="%module_name%" schema_version="0.0.1" />
 </config>

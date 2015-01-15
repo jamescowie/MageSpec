@@ -104,12 +104,12 @@ class GeneratorAssembler implements Assembler
         $container->setShared('xml_generator.generators.module', function($c) {
             $suite = $c->getParam('mage_locator', array('main' => ''));
             if (isset($suite['src_path'])) {
-                $etcPath = rtrim($suite['src_path'], '/') . DIRECTORY_SEPARATOR . '..'
-                    . DIRECTORY_SEPARATOR . 'etc' . DIRECTORY_SEPARATOR . 'modules' . DIRECTORY_SEPARATOR;
+                // TODO set this to be the modules path for module XML generation..
+                $srcPath = isset($suite['src_path']) ? rtrim($suite['src_path'], '/') . DIRECTORY_SEPARATOR : 'src';
             }
 
             return new ModuleGenerator(
-                $etcPath,
+                $srcPath,
                 $c->get('filesystem')
             );
         });

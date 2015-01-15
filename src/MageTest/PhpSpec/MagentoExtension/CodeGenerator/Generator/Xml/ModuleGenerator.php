@@ -27,6 +27,24 @@ class ModuleGenerator
 
     public function generate($moduleName)
     {
+        $modulePath = explode("_", $moduleName);
+        $path = $this->path . $modulePath[0] . DIRECTORY_SEPARATOR .$modulePath[1] . DIRECTORY_SEPARATOR;
+
+        if (!$this->fileSystem->pathExists($path . 'etc')) {
+            $this->fileSystem->makeDirectory($path . 'etc');
+        }
+
+        $values = array(
+            '%module_name%' => $moduleName
+        );
+
+        $this->fileSystem->putFileContents(
+            $path . 'etc' . DIRECTORY_SEPARATOR . 'module.xml',
+            strtr(file_get_contents(__DIR__ . '/templates/module.template'), $values)
+        );
+
+
+
 //        if ($this->moduleFileExists($moduleName)) {
 //            return;
 //        }
