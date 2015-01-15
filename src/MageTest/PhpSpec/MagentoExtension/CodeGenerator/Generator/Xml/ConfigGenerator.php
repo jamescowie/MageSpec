@@ -48,30 +48,6 @@ class ConfigGenerator
         $this->elementGenerators[] = $elementGenerator;
     }
 
-    /**
-     * @param string $type
-     */
-    public function generateElement($type, $moduleName)
-    {
-        $this->directory = $this->getDirectoryPath($moduleName);
-
-        $xml = new \SimpleXMLElement($this->getCurrentConfigXml($moduleName));
-
-        foreach ($this->elementGenerators as $elementGenerator) {
-            if ($elementGenerator->supports($type)) {
-                if ($elementGenerator->elementExistsInXml($xml, $type, $moduleName)) {
-                    return;
-                }
-                $elementGenerator->addElementToXml($xml, $type, $moduleName);
-                $formatted = $this->getIndentedXml($xml);
-                $this->writeConfigFile($formatted);
-                return;
-            }
-        }
-
-        throw new XmlGeneratorException('No element generator found for type: '.$type);
-    }
-
     private function getDirectoryPath($moduleName)
     {
         $modulePath = str_replace('_', DIRECTORY_SEPARATOR, $moduleName);

@@ -73,10 +73,6 @@ class ModuleUpdateListener implements EventSubscriberInterface
 
             $this->moduleGenerator->generate(($moduleName));
 
-            $this->configGenerator->generateElement(
-                $this->getClassType($className),
-                $moduleName
-            );
         }
     }
 
