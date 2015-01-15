@@ -86,7 +86,7 @@ class BlockGenerator implements GeneratorInterface
                 file_get_contents(__DIR__ . '/templates/generic_class.template'), $values
             );
         }
-        
+
         $this->filesystem->putFileContents($filepath, $content);
         $this->io->writeln(sprintf(
             "<info>Magento block <value>%s</value> created in <value>'%s'</value>.</info>\n",

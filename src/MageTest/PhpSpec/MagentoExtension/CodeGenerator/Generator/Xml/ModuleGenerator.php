@@ -27,22 +27,22 @@ class ModuleGenerator
 
     public function generate($moduleName)
     {
-        if ($this->moduleFileExists($moduleName)) {
-            return;
-        }
-
-        $values = array(
-            '%module_name%' => $moduleName
-        );
-
-        if (!$this->fileSystem->pathExists($this->path)) {
-            $this->fileSystem->makeDirectory($this->path);
-        }
-
-        $this->fileSystem->putFileContents(
-            $this->getFilePath($moduleName),
-            strtr(file_get_contents(__DIR__ . '/templates/module.template'), $values)
-        );
+//        if ($this->moduleFileExists($moduleName)) {
+//            return;
+//        }
+//
+//        $values = array(
+//            '%module_name%' => $moduleName
+//        );
+//
+//        if (!$this->fileSystem->pathExists($this->path)) {
+//            $this->fileSystem->makeDirectory($this->path);
+//        }
+//
+//        $this->fileSystem->putFileContents(
+//            $this->getFilePath($moduleName),
+//            strtr(file_get_contents(__DIR__ . '/templates/module.template'), $values)
+//        );
     }
 
     private function getFilePath($moduleName)
