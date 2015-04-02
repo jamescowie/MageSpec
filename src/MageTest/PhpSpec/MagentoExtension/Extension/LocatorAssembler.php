@@ -44,7 +44,6 @@ class LocatorAssembler implements Assembler
             $specPrefix = $assembler->getSpecPrefix($config);
             $srcPath = $assembler->getSrcPath($config);
             $specPath = $assembler->getSpecPath($config);
-            $codePool = $assembler->getCodePool($config);
             $filesystem = $c->get('filesystem');
 
             if (!$filesystem->isDirectory($srcPath)) {
@@ -56,32 +55,32 @@ class LocatorAssembler implements Assembler
             }
 
             $c->setShared('locator.locators.model_locator',
-                function ($c) use ($srcNS, $specPrefix, $srcPath, $specPath, $filesystem, $codePool) {
-                    return new ModelLocator($srcNS, $specPrefix, $srcPath, $specPath, $filesystem, $codePool);
+                function ($c) use ($srcNS, $specPrefix, $srcPath, $specPath, $filesystem) {
+                    return new ModelLocator($srcNS, $specPrefix, $srcPath, $specPath, $filesystem);
                 }
             );
 
             $c->setShared('locator.locators.resource_model_locator',
-                function ($c) use ($srcNS, $specPrefix, $srcPath, $specPath, $filesystem, $codePool) {
-                    return new ResourceModelLocator($srcNS, $specPrefix, $srcPath, $specPath, $filesystem, $codePool);
+                function ($c) use ($srcNS, $specPrefix, $srcPath, $specPath, $filesystem) {
+                    return new ResourceModelLocator($srcNS, $specPrefix, $srcPath, $specPath, $filesystem);
                 }
             );
 
             $c->setShared('locator.locators.block_locator',
-                function ($c) use ($srcNS, $specPrefix, $srcPath, $specPath, $filesystem, $codePool) {
-                    return new BlockLocator($srcNS, $specPrefix, $srcPath, $specPath, $filesystem, $codePool);
+                function ($c) use ($srcNS, $specPrefix, $srcPath, $specPath, $filesystem) {
+                    return new BlockLocator($srcNS, $specPrefix, $srcPath, $specPath, $filesystem);
                 }
             );
 
             $c->setShared('locator.locators.helper_locator',
-                function ($c) use ($srcNS, $specPrefix, $srcPath, $specPath, $filesystem, $codePool) {
-                    return new HelperLocator($srcNS, $specPrefix, $srcPath, $specPath, $filesystem, $codePool);
+                function ($c) use ($srcNS, $specPrefix, $srcPath, $specPath, $filesystem) {
+                    return new HelperLocator($srcNS, $specPrefix, $srcPath, $specPath, $filesystem);
                 }
             );
 
             $c->setShared('locator.locators.controller_locator',
-                function ($c) use ($srcNS, $specPrefix, $srcPath, $specPath, $filesystem, $codePool) {
-                    return new ControllerLocator($srcNS, $specPrefix, $srcPath, $specPath, $filesystem, $codePool);
+                function ($c) use ($srcNS, $specPrefix, $srcPath, $specPath, $filesystem) {
+                    return new ControllerLocator($srcNS, $specPrefix, $srcPath, $specPath, $filesystem);
                 }
             );
         });
@@ -105,10 +104,5 @@ class LocatorAssembler implements Assembler
     public function getSpecPath(array $config)
     {
         return array_key_exists('spec_path', $config) ? rtrim($config['spec_path'], '/') . DIRECTORY_SEPARATOR : '.';
-    }
-
-    public function getCodePool(array $config)
-    {
-        return array_key_exists('code_pool', $config) ? $config['code_pool'] : 'local';
     }
 }

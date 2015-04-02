@@ -35,18 +35,16 @@ abstract class AbstractResourceLocator
     protected $fullSrcPath;
     protected $fullSpecPath;
     protected $filesystem;
-    protected $codePool;
 
     public function __construct($srcNamespace = '', $specNamespacePrefix = '',
-                                $srcPath = 'src', $specPath = 'spec', Filesystem $filesystem = null, $codePool = null)
+                                $srcPath = 'src', $specPath = 'spec', Filesystem $filesystem = null)
     {
         $this->checkInitialData();
 
         $this->filesystem = $filesystem ? : new Filesystem;
-        $this->codePool   = $codePool ? : 'local';
 
-        $this->srcPath       = rtrim(realpath($srcPath), '/\\') . DIRECTORY_SEPARATOR . $this->codePool . DIRECTORY_SEPARATOR;
-        $this->specPath      = rtrim(realpath($specPath), '/\\') . DIRECTORY_SEPARATOR . $this->codePool . DIRECTORY_SEPARATOR;
+        $this->srcPath       = rtrim(realpath($srcPath), '/\\') . DIRECTORY_SEPARATOR;
+        $this->specPath      = rtrim(realpath($specPath), '/\\') . DIRECTORY_SEPARATOR;
         $this->srcNamespace  = ltrim(trim($srcNamespace, ' \\') . '\\', '\\');
         $this->specNamespace = trim($specNamespacePrefix, ' \\') . '\\';
         $this->fullSrcPath   = $this->srcPath;
@@ -85,11 +83,6 @@ abstract class AbstractResourceLocator
     public function getSpecNamespace()
     {
         return $this->specNamespace;
-    }
-
-    public function getCodePool()
-    {
-        return $this->codePool;
     }
 
     public function getAllResources()

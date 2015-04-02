@@ -17,39 +17,50 @@ class ModuleGenerator
     private $path;
 
     /**
-     * @var string
-     */
-    private $codePool;
-
-    /**
      * @param string $path
      */
-    public function __construct($path, Filesystem $fileSystem, $codePool = 'local')
+    public function __construct($path, Filesystem $fileSystem)
     {
         $this->fileSystem = $fileSystem;
         $this->path = $path;
-        $this->codePool = $codePool;
     }
 
     public function generate($moduleName)
     {
-        if ($this->moduleFileExists($moduleName)) {
-            return;
+        $modulePath = explode("_", $moduleName);
+        $path = $this->path . $modulePath[0] . DIRECTORY_SEPARATOR .$modulePath[1] . DIRECTORY_SEPARATOR;
+
+        if (!$this->fileSystem->pathExists($path . 'etc')) {
+            $this->fileSystem->makeDirectory($path . 'etc');
         }
 
         $values = array(
-            '%module_name%' => $moduleName,
-            '%code_pool%' => $this->codePool,
+            '%module_name%' => $moduleName
         );
-
-        if (!$this->fileSystem->pathExists($this->path)) {
-            $this->fileSystem->makeDirectory($this->path);
-        }
 
         $this->fileSystem->putFileContents(
-            $this->getFilePath($moduleName),
+            $path . 'etc' . DIRECTORY_SEPARATOR . 'module.xml',
             strtr(file_get_contents(__DIR__ . '/templates/module.template'), $values)
         );
+
+
+
+//        if ($this->moduleFileExists($moduleName)) {
+//            return;
+//        }
+//
+//        $values = array(
+//            '%module_name%' => $moduleName
+//        );
+//
+//        if (!$this->fileSystem->pathExists($this->path)) {
+//            $this->fileSystem->makeDirectory($this->path);
+//        }
+//
+//        $this->fileSystem->putFileContents(
+//            $this->getFilePath($moduleName),
+//            strtr(file_get_contents(__DIR__ . '/templates/module.template'), $values)
+//        );
     }
 
     private function getFilePath($moduleName)
